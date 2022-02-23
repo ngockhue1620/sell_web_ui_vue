@@ -1,14 +1,15 @@
 <template>
-  <div id="app">
-    <router-view />
+  <div>
+    Day la Admin page
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App',
-  components: {
-  }
+
 }
 </script>
 
+<style>
+
+</style>
