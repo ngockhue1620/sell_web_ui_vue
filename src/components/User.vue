@@ -3,46 +3,7 @@
     <div class="barControl">
       <ToolBar />
     </div>
-    <div class="barContent">
-      <div class="searchStyle">
-        <div class="searchPosition">
-          <div class="searchContainer">
-            <input placeholder="search" class="inputSearch" />
-            <span class="searchButton btn">
-              <b-icon icon="search"></b-icon>
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="underbackground"></div> -->
-      <b-container class="productsList">
-        <b-row>
-          <b-col cols="4" v-for="item in listProduct" :key="item.id">
-            <b-container>
-              <b-row>
-                <b-card
-                  :title="item.name"
-                  :img-src="item.image ? item.image : item.image_url"
-                  img-alt="Image"
-                  img-top
-                  tag="article"
-                  class="mb-2"
-                  img-width="280"
-                  img-height="280"
-                >
-                  <b-card-text>
-                    {{ item.description }}
-                  </b-card-text>
-                  <b-button href="#" variant="primary"
-                    >Them Vao Gio Hang</b-button
-                  >
-                </b-card>
-              </b-row>
-            </b-container>
-          </b-col>
-        </b-row>
-      </b-container>
-    </div>
+    <router-view />
   </div>
 </template>
 
@@ -50,6 +11,7 @@
 import Home from "../api/home.js";
 import ToolBar from "./userComponents/ToolBar";
 // import Colors from "../defaultValue/colors.js";
+import { mapActions } from "vuex";
 export default {
   components: {
     ToolBar,
@@ -60,10 +22,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["saveProduct"]),
     async fetchProduct() {
       const result = await Home.getProduct();
       console.log(result);
-      this.listProduct = result;
+      this.saveProduct(result);
     },
   },
   mounted() {
@@ -81,10 +44,7 @@ export default {
   display: flex;
   width: 100%;
 }
-.barContent {
-  margin-left: 22%;
-  width: 100%;
-}
+
 .inputSearch {
   color: hsla(0, 0%, 100%, 0.9);
   background-color: transparent;
