@@ -1,62 +1,134 @@
 <template>
-  <div>
-  <b-navbar toggleable="lg" type="dark" variant="info">
-    <b-navbar-brand href="#">Trang chu</b-navbar-brand>
-
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
-
-    <b-collapse id="nav-collapse" is-nav>
-      <b-navbar-nav>
-        <b-nav-item><router-link to="/">Trang chu</router-link></b-nav-item>
-      </b-navbar-nav>
-      
-    </b-collapse>
-  </b-navbar>
-  <div>
-    <div>
-  <b-card no-body class="overflow-hidden" style="max-width: 540px;" v-for="item in listProduct" :key="item.id">
-    <b-row no-gutters>
-      <b-col md="6">
-        <b-card-img :src="item.image" alt="Image" class="rounded-0"></b-card-img>
-      </b-col>
-      <b-col md="6">
-        <b-card-body title="Horizontal Card">
-          <b-card-text>
-            {{item.name}}
-          </b-card-text>
-          <b-card-text>
-            {{item.descripton}}
-          </b-card-text>
-        </b-card-body>
-      </b-col>
-    </b-row>
-  </b-card>
-</div>
+  <div class="home">
+    <div class="barControl">
+      <ToolBar />
+    </div>
+    <div class="barContent">
+      <div class="searchStyle">
+        <div class="searchPosition">
+          <div class="searchContainer">
+            <input placeholder="search" class="inputSearch" />
+            <span class="searchButton btn">
+              <b-icon icon="search"></b-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="underbackground"></div> -->
+      <b-container class="productsList">
+        <b-row>
+          <b-col cols="4" v-for="item in listProduct" :key="item.id">
+            <b-container>
+              <b-row>
+                <b-card
+                  :title="item.name"
+                  :img-src="item.image ? item.image : item.image_url"
+                  img-alt="Image"
+                  img-top
+                  tag="article"
+                  class="mb-2"
+                  img-width="280"
+                  img-height="280"
+                >
+                  <b-card-text>
+                    {{ item.description }}
+                  </b-card-text>
+                  <b-button href="#" variant="primary"
+                    >Them Vao Gio Hang</b-button
+                  >
+                </b-card>
+              </b-row>
+            </b-container>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
-import Home from '../api/home.js';
+import Home from "../api/home.js";
+import ToolBar from "./userComponents/ToolBar";
+// import Colors from "../defaultValue/colors.js";
 export default {
-  data(){
+  components: {
+    ToolBar,
+  },
+  data() {
     return {
-      listProduct: []
-    }
+      listProduct: [],
+    };
   },
   methods: {
-    async fetchProduct(){
-      const result = await Home.getProduct()
-      console.log(result)
-      this.listProduct = result
-    }
+    async fetchProduct() {
+      const result = await Home.getProduct();
+      console.log(result);
+      this.listProduct = result;
+    },
   },
-  mounted(){
-    this.fetchProduct()
-  }
-}
+  mounted() {
+    this.fetchProduct();
+  },
+};
 </script>
 
 <style>
-
+.barControl {
+  width: 22%;
+  position: fixed;
+}
+.home {
+  display: flex;
+  width: 100%;
+}
+.barContent {
+  margin-left: 22%;
+  width: 100%;
+}
+.inputSearch {
+  color: hsla(0, 0%, 100%, 0.9);
+  background-color: transparent;
+  border-width: 0px;
+  border: none;
+  outline: none;
+  padding: 2px;
+  margin: 5px;
+}
+.searchContainer {
+  border: 1px white solid;
+  border-radius: 20px;
+  width: 235px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.searchButton {
+  margin-right: 10px;
+}
+.searchPosition {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  top: 14px;
+  right: 35px;
+}
+.imageContainer {
+  width: 280px;
+  height: 280px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.underbackground {
+  width: 100%;
+  background: linear-gradient(87deg, #2dce89, #2dcecc) !important;
+  height: 400px;
+  position: fixed;
+  margin-top: -100px;
+}
+.searchStyle {
+  width: 100%;
+  background: linear-gradient(87deg, #2dce89, #2dcecc) !important;
+  height: 100px;
+}
 </style>
