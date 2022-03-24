@@ -48,8 +48,12 @@ export default {
     ...mapGetters(["listProducts"]),
   },
   methods: {
-    ...mapActions(["addToCart"]),
+    ...mapActions(["addToCart", "isLogin"]),
     addProductToCart(item) {
+      if (!this.isLogin) {
+        alert("You must login before");
+        return;
+      }
       const value = {
         product: item,
         quantity: 1,

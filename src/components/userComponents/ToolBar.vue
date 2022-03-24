@@ -30,9 +30,11 @@
         >
       </li>
       <li>
-        <span><b-icon icon="journals"></b-icon></span>
-        Dang xu ly
-        <span><b-badge variant="danger">24</b-badge></span>
+        <router-link to="/cart-in-progress">
+          <span><b-icon icon="journals"></b-icon></span>
+          Dang xu ly
+          <span><b-badge variant="danger">24</b-badge></span>
+        </router-link>
       </li>
       <li>
         <span><b-icon icon="stopwatch"></b-icon></span>Lich su mua hang
@@ -42,7 +44,7 @@
     <div v-else>
       <b-container>
         <h3><router-link to="/">Ngoc Khue Shop</router-link></h3>
-        <b-form @submit.prevent="login">
+        <b-form @submit.prevent="handleForm()">
           <b-form-group
             id="input-group-1"
             label="Tai Khoan"
@@ -66,9 +68,27 @@
               required
             ></b-form-input>
           </b-form-group>
+          <b-form-group
+            id="input-group-2"
+            label="Ten Hien Thi"
+            label-for="input-2"
+          >
+            <b-form-input
+              v-if="!isLoginForm"
+              id="input-3"
+              v-model="form.fullname"
+              placeholder="Ten Hien Thi"
+              type="text"
+              required
+            ></b-form-input>
+          </b-form-group>
           <div class="buttonLogin">
-            <b-button type="submit" variant="primary">Dang Ky</b-button>
-            <b-button type="submit" variant="success">Dang Nhap</b-button>
+            <span type="submit" variant="primary" @click="isFormSignUp">{{
+              isLoginForm ? "Dang ky" : "Dang Nhap"
+            }}</span>
+            <b-button type="submit" variant="success" value="2">{{
+              !isLoginForm ? "Dang ky" : "Dang Nhap"
+            }}</b-button>
           </div>
         </b-form>
       </b-container>
@@ -85,7 +105,9 @@ export default {
       form: {
         username: "",
         password: "",
+        fullname: "",
       },
+      isLoginForm: true,
     };
   },
   computed: {
@@ -98,13 +120,26 @@ export default {
   },
   methods: {
     ...mapActions(["loginOrLogout"]),
-    async login() {
-      const result = await UserApi.login(this.form);
-      this.loginOrLogout({
-        type: "login",
-        user: result.user,
-        token: result.token,
-      });
+    isFormSignUp() {
+      this.isLoginForm = !this.isLoginForm;
+      console.log(this.isLoginForm);
+    },
+
+    async handleForm() {
+      if (this.isLoginForm) {
+        const result = await UserApi.login(this.form);
+        if (!result) return;
+        this.loginOrLogout({
+          type: "login",
+          user: result.user,
+          token: result.token,
+        });
+      } else {
+        await UserApi.signUp(this.form);
+      }
+    },
+    async signUp() {
+      await UserApi.signUp(this.form);
     },
   },
 };

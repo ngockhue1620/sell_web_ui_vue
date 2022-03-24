@@ -1,20 +1,36 @@
 import Vue from 'vue'
 import handleErrors from '../utils/handleErrors'
 import store from '../store/index'
-var token = store.getters.token
+
 export default {
   order: (value) =>
     Vue.axios
       .post('http://127.0.0.1:8000/order/', value, {
         headers: {
-          Authorization: 'Bearer ' + token
+          Authorization: 'Bearer ' + store.getters.token
         }
       })
       .then((response) => {
-        handleErrors.showError({ 'message': 'Order success' })
+        handleErrors.showError(response.data)
+        console.log(response.data)
         return response.data
       }).catch((error) => {
         console.log(error)
         handleErrors.showError(error.response.data)
+      }),
+  orderInProgress: () =>
+    Vue.axios
+      .get('http://127.0.0.1:8000/order/', {
+        headers: {
+          Authorization: 'Bearer ' + store.getters.token
+        }
       })
+      .then((response) => {
+        handleErrors.showError(response.data)
+        console.log(response.data)
+        return response.data
+      }).catch((error) => {
+        console.log(error)
+        handleErrors.showError(error.response.data)
+      }),
 }

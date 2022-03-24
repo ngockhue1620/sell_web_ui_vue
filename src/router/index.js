@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import User from '../components/User.vue'
 import Admin from '../components/Admin.vue'
 import Cart from '../components/userComponents/cart/Cart.vue'
+import CartInProgress from '../components/userComponents/cart/CartInProgress.vue'
 import BarContent from '../components/userComponents/BarContent.vue'
 import store from '../store/index'
 Vue.use(VueRouter)
@@ -21,6 +22,11 @@ const routes = [
       {
         path: '/cart',
         component: Cart,
+        meta: { requireAuth: true }
+      },
+      {
+        path: '/cart-in-progress',
+        component: CartInProgress,
         meta: { requireAuth: true }
       }
     ]

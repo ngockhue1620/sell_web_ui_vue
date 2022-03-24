@@ -1,6 +1,7 @@
 export default {
   state: {
-    products: []
+    products: [],
+    orderInProgeess: [],
   },
   getters: {
     totalProductInCart: (state) => {

@@ -51,7 +51,9 @@ export default {
         order_detail: this.productInCart,
       };
       const result = await OrderApi.order(value);
+      console.log(result);
       if (result) {
+        console.log(result);
         this.remove({ type: "all" });
       }
     },
