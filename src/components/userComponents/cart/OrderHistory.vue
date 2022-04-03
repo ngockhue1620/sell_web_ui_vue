@@ -60,6 +60,8 @@
 <script>
 import OrderApi from "../../../api/orderApi";
 import InProgressItem from "./InProgressItem.vue";
+import constance from "../../../constance/const.js";
+
 export default {
   components: {
     InProgressItem,
@@ -74,7 +76,7 @@ export default {
   },
   methods: {
     async getOrderInProgress() {
-      const result = await OrderApi.orderInProgress();
+      const result = await OrderApi.orderStatus(constance.STATUS.DONE);
       this.cartProgress = result;
     },
     async getOrderDetail() {

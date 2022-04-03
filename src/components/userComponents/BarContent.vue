@@ -29,9 +29,15 @@
                 <b-card-text>
                   {{ item.description }}
                 </b-card-text>
-                <b-button variant="primary" @click="addProductToCart(item)"
-                  >Them Vao Gio Hang</b-button
-                >
+
+                <div>
+                  <b-button variant="primary" @click="addProductToCart(item)"
+                    >Them Vao Gio Hang</b-button
+                  >
+                </div>
+                <div>
+                  <router-link :to="`product/${item.id}`">Chi Tiet</router-link>
+                </div>
               </b-card>
             </b-row>
           </b-container>

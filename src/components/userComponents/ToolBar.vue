@@ -1,10 +1,10 @@
 <template>
   <div class="card controlBar" :style="windowHeight">
-    <ul v-if="isLogin">
-      <li>
+    <b-list-group v-if="isLogin">
+      <b-list-group-item>
         <h3><router-link to="/">Ngoc Khue Shop</router-link></h3>
-      </li>
-      <li>
+      </b-list-group-item>
+      <b-list-group-item>
         <div>
           <b-avatar
             href="javascript:;"
@@ -17,30 +17,28 @@
           ></b-avatar>
           <b>{{ user.fullname }}</b>
         </div>
-      </li>
-      <li>
-        <router-link to="/cart"
+      </b-list-group-item>
+      <b-list-group-item>
+        <router-link to="/cart" class="nav-link"
           ><span>
             <b-icon icon="cart"></b-icon>
           </span>
           Gio Hang
-          <span
-            ><b-badge variant="danger">{{ totalProductInCart }}</b-badge></span
-          ></router-link
-        >
-      </li>
-      <li>
-        <router-link to="/cart-in-progress">
+          {{ " " + totalProductInCart }}
+        </router-link>
+      </b-list-group-item>
+      <b-list-group-item>
+        <router-link to="/order-in-progress" class="nav-link">
           <span><b-icon icon="journals"></b-icon></span>
           Dang xu ly
-          <span class="bg-badge"><b-badge variant="danger">24</b-badge></span>
         </router-link>
-      </li>
-      <li>
-        <span><b-icon icon="stopwatch"></b-icon></span>Lich su mua hang
-        <span class="bg-badge"><b-badge variant="danger">24</b-badge></span>
-      </li>
-    </ul>
+      </b-list-group-item>
+      <b-list-group-item>
+        <router-link to="/order-history" class="nav-link">
+          <span><b-icon icon="stopwatch"></b-icon></span>Lich su mua hang
+        </router-link>
+      </b-list-group-item>
+    </b-list-group>
     <div v-else>
       <b-container>
         <h3><router-link to="/">Ngoc Khue Shop</router-link></h3>

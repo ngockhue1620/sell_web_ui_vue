@@ -3,8 +3,10 @@ import VueRouter from 'vue-router'
 import User from '../components/User.vue'
 import Admin from '../components/Admin.vue'
 import Cart from '../components/userComponents/cart/Cart.vue'
-import CartInProgress from '../components/userComponents/cart/CartInProgress.vue'
+import OrderInProgress from '../components/userComponents/cart/OrderInProgress.vue'
+import OrderHistory from '../components/userComponents/cart/OrderHistory.vue'
 import BarContent from '../components/userComponents/BarContent.vue'
+import ProductDetail from '../components/userComponents/product/ProductDetail.vue'
 import store from '../store/index'
 Vue.use(VueRouter)
 
@@ -25,9 +27,19 @@ const routes = [
         meta: { requireAuth: true }
       },
       {
-        path: '/cart-in-progress',
-        component: CartInProgress,
+        path: '/order-in-progress',
+        component: OrderInProgress,
         meta: { requireAuth: true }
+      },
+      {
+        path: '/order-history',
+        component: OrderHistory,
+        meta: { requireAuth: true }
+      },
+      {
+        path: '/product/:id',
+        component: ProductDetail,
+        meta: { requireAuth: false },
       }
     ]
   },
