@@ -33,12 +33,12 @@
         <router-link to="/cart-in-progress">
           <span><b-icon icon="journals"></b-icon></span>
           Dang xu ly
-          <span><b-badge variant="danger">24</b-badge></span>
+          <span class="bg-badge"><b-badge variant="danger">24</b-badge></span>
         </router-link>
       </li>
       <li>
         <span><b-icon icon="stopwatch"></b-icon></span>Lich su mua hang
-        <b-badge variant="danger">24</b-badge>
+        <span class="bg-badge"><b-badge variant="danger">24</b-badge></span>
       </li>
     </ul>
     <div v-else>
@@ -162,5 +162,8 @@ li {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+.bg-badge {
+  background: "#0d6efd";
 }
 </style>

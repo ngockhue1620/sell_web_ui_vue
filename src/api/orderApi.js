@@ -33,4 +33,19 @@ export default {
         console.log(error)
         handleErrors.showError(error.response.data)
       }),
+
+  orderDetail: (id) =>
+    Vue.axios
+      .get(`http://127.0.0.1:8000/order/detail/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + store.getters.token
+        }
+      })
+      .then((response) => {
+        handleErrors.showError(response.data)
+        return response.data
+      }).catch((error) => {
+        console.log(error)
+        handleErrors.showError(error.response.data)
+      }),
 }
