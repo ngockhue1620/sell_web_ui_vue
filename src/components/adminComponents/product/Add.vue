@@ -1,38 +1,11 @@
 <template>
-  <div class="home">
-    <div class="barControl">
-      <ToolBar />
-    </div>
-    <router-view />
+  <div class="barContent">
+    <b-container class="productsList"> asdd </b-container>
   </div>
 </template>
 
 <script>
-import Home from "../api/home.js";
-import ToolBar from "./userComponents/ToolBar";
-// import Colors from "../defaultValue/colors.js";
-import { mapActions } from "vuex";
-export default {
-  components: {
-    ToolBar,
-  },
-  data() {
-    return {
-      listProduct: [],
-    };
-  },
-  methods: {
-    ...mapActions(["saveProduct"]),
-    async fetchProduct() {
-      const result = await Home.getProduct();
-      console.log(result);
-      this.saveProduct(result);
-    },
-  },
-  mounted() {
-    this.fetchProduct();
-  },
-};
+export default {};
 </script>
 
 <style>
@@ -44,7 +17,11 @@ export default {
   display: flex;
   width: 100%;
 }
-
+.barContent {
+  margin-left: 22%;
+  width: 100%;
+  background: whitesmoke;
+}
 .inputSearch {
   color: hsla(0, 0%, 100%, 0.9);
   background-color: transparent;
