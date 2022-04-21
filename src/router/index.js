@@ -1,13 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import jwt_decode from "jwt-decode";
+import store from '../store/index'
+
+
 import User from '../components/User.vue'
-import Admin from '../components/Admin.vue'
 import Cart from '../components/userComponents/cart/Cart.vue'
 import OrderInProgress from '../components/userComponents/cart/OrderInProgress.vue'
 import OrderHistory from '../components/userComponents/cart/OrderHistory.vue'
 import BarContent from '../components/userComponents/BarContent.vue'
 import ProductDetail from '../components/userComponents/product/ProductDetail.vue'
-import store from '../store/index'
+
+import Login from '../components/adminComponents/Login.vue'
+import Admin from '../components/Admin.vue'
+import AMProduct from '../components/adminComponents/product/List.vue'
+import AMAddProduct from '../components/adminComponents/product/Add.vue'
+
 Vue.use(VueRouter)
 
 
@@ -43,7 +51,30 @@ const routes = [
       }
     ]
   },
-  { path: '/admin', component: Admin }
+  {
+    path: '/admin',
+    component: Admin,
+    children: [
+      {
+        path: '',
+        component: AMProduct,
+        meta: { requireAuth: true },
+      },
+      {
+        path: 'add-product',
+        component: AMAddProduct,
+        meta: { requireAuth: true },
+      }
+    ],
+    meta: { requireAuth: true },
+    name: "admin"
+  },
+  {
+    path: '/login',
+    component: Login,
+    meta: { requireAuth: false },
+    name: 'admin-login'
+  }
 ]
 
 const router = new VueRouter({
@@ -53,6 +84,15 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
     if (store.state.user?.isLogin) {
+      console.log(to)
+      if (to.name === "admin") {
+        var decoded = jwt_decode(store.state.user?.token);
+        if (decoded.admin) {
+          next()
+        } else {
+          next({ name: 'admin-login' })
+        }
+      }
       next()
     } else {
       next({ name: 'home' })
