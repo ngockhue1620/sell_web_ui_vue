@@ -16,6 +16,8 @@ import Admin from '../components/Admin.vue'
 import AMProduct from '../components/adminComponents/product/List.vue'
 import AMAddProduct from '../components/adminComponents/product/Add.vue'
 
+import AMMOrder from '../components/adminComponents/order/manage.vue'
+
 Vue.use(VueRouter)
 
 
@@ -64,6 +66,11 @@ const routes = [
         path: 'add-product',
         component: AMAddProduct,
         meta: { requireAuth: true },
+      },
+      {
+        path: 'manage-order',
+        component: AMMOrder,
+        meta: { requireAuth: true },
       }
     ],
     meta: { requireAuth: true },
@@ -85,7 +92,8 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requireAuth) {
     if (store.state.user?.isLogin) {
       console.log(to)
-      if (to.name === "admin") {
+      const re = /admin/
+      if (re.exec(to.fullPath)) {
         var decoded = jwt_decode(store.state.user?.token);
         if (decoded.admin) {
           next()

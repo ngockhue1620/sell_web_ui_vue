@@ -1,11 +1,105 @@
 <template>
   <div class="barContent">
-    <b-container class="productsList"> asdd </b-container>
+    <b-container class="productsList">
+      <b-form @submit="onclickSubmit">
+      
+      <b-form-group id="input-group-0" label="Category:" label-for="input-0">
+        <b-form-select v-model="infoProduct.category" :options="options" value-field="id" text-field="name"></b-form-select>
+      </b-form-group>
+      
+      <b-form-group
+        label="Name:"
+      >
+        <b-form-input
+          placeholder="Enter name product"
+          required
+          v-model="infoProduct.name"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Description:" >
+        <b-form-input
+          placeholder="Enter description"
+          required
+          v-model="infoProduct.description"
+        ></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Price:" >
+        <b-form-input type="number" v-model="infoProduct.price"></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Quantity:" >
+        <b-form-input type="number" v-model="infoProduct.quantity"></b-form-input>
+      </b-form-group>
+
+      <b-form-group label="Image:" label-cols-sm="2">
+        <b-form-file v-model="infoProduct.image"></b-form-file>
+      </b-form-group>
+
+      <b-form-group label="Image url:" >
+        <b-form-textarea
+          placeholder="Link product image"
+          v-model="infoProduct.image_url"
+        ></b-form-textarea>
+      </b-form-group>
+
+      <b-button type="submit" variant="primary" >Submit</b-button>
+      <b-button type="reset" variant="danger">Reset</b-button>
+    </b-form>
+    </b-container>
   </div>
 </template>
 
 <script>
-export default {};
+import Product from "../../../api/admin/product.js"
+export default {
+  data() {
+      return {
+        value: 0,
+        options: [],
+        infoProduct: {
+          category: 0,
+          name: "",
+          description: "",
+          price: null,
+          quantity: null,
+          image: null,
+          image_url: ""
+        }
+      }
+    },
+    methods:{
+      async getListCategory(){
+        const getListCategory = await Product.listCategory();
+        this.options = getListCategory
+        this.options.unshift({
+          id: 0,
+          name: "Danh Muc San Pham"
+        })
+        console.log(getListCategory)
+      },
+      async onclickSubmit(){
+        
+        await Product.addProduct(this.infoProduct);
+        
+
+      }
+    },
+    mounted(){
+      this.getListCategory()
+      
+    },
+    watch: {
+      infoProduct: {
+        handler(){
+            console.log(this.infoProduct)
+        },
+        deep: true
+      },
+      
+    }
+};
 </script>
 
 <style>

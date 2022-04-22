@@ -29,6 +29,11 @@
           <span><b-icon icon="stopwatch"></b-icon></span>Them san pham
         </router-link>
       </b-list-group-item>
+      <b-list-group-item>
+        <router-link to="/admin/manage-order" class="nav-link">
+          <span><b-icon icon="stopwatch"></b-icon></span>Quan li don hang
+        </router-link>
+      </b-list-group-item>
     </b-list-group>
   </div>
 </template>
