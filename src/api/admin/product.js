@@ -6,15 +6,17 @@ const listCategory = () => baseApi.baseApi({
 })
 
 const addProduct = (data) => baseApi.baseApi({
-    method: 'post',
-    url: `product/`,
-    data: data
+  method: 'post',
+  url: `product/`,
+  data: data,
+  contentType: "multipart/form-data"
 })
 
-const editProduct = (data,id) => baseApi.baseApi({
-  method: 'put',
+const editProduct = (data, id) => baseApi.baseApi({
+  method: 'patch',
   url: `product/${id}/`,
-  data: data
+  data: data,
+  contentType: "multipart/form-data"
 })
 
 const deleteProduct = (id) => baseApi.baseApi({
