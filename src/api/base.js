@@ -10,7 +10,8 @@ const baseApi = async (data) => {
     data: data.data,
     headers: {
       Authorization: 'Bearer ' + store.getters.token
-    }
+    },
+    "Content-Type": data.contentType ? data.contentType : "application/json"
   };
 
   return Vue.axios(options)

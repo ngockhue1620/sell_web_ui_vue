@@ -1,5 +1,5 @@
 <template>
-  <div class="barContent" >
+  <div class="barContent">
     <b-container class="productsList">
       <b-row>
         <b-col cols="4" v-for="item in listProduct" :key="item.id">
@@ -23,9 +23,11 @@
                   <router-link :to="`/product/${item.id}`"
                     >Chi Tiet</router-link
                   >
-                   <b-button v-b-modal.edit @click="getdata(item)">Edit</b-button>
-                  
-                  <b-button v-b-modal.delete @click="getId(item)" >xoa</b-button>
+                  <b-button v-b-modal.edit @click="getdata(item)"
+                    >Edit</b-button
+                  >
+
+                  <b-button v-b-modal.delete @click="getId(item)">xoa</b-button>
                 </div>
               </b-card>
             </b-row>
@@ -33,22 +35,31 @@
         </b-col>
       </b-row>
     </b-container>
-    <b-modal id="edit" title="BootstrapVue" @show="turnOnEdit" @hide="turnOffEdit" :hide-footer= true>
-        <Edit v-if="isEDit && infoProduct !={}"  :product="infoProduct"/>
+    <b-modal
+      id="edit"
+      title="BootstrapVue"
+      @show="turnOnEdit"
+      @hide="turnOffEdit"
+      :hide-footer="true"
+      size="xl"
+    >
+      <Edit v-if="isEDit && infoProduct != {}" :product="infoProduct" />
     </b-modal>
-    <b-modal id="delete" title="BootstrapVue" :hide-footer= true>
+    <b-modal id="delete" title="BootstrapVue" :hide-footer="true">
       <p class="my-4">Bạn có chắc chắn xóa?</p>
-      <b-button class="mt-3" block @click="acceptDelete(idProduct)">Accept</b-button>
+      <b-button class="mt-3" block @click="acceptDelete(idProduct)"
+        >Accept</b-button
+      >
     </b-modal>
   </div>
 </template>
 
 <script>
 import Home from "../../../api/home.js";
-import Product from "../../../api/admin/product.js"
-import Edit from "../../../components/adminComponents/product/Edit.vue"
+import Product from "../../../api/admin/product.js";
+import Edit from "../../../components/adminComponents/product/Edit.vue";
 export default {
-  components:{
+  components: {
     Edit,
   },
   data() {
@@ -56,35 +67,37 @@ export default {
       listProduct: [],
       isEDit: false,
       infoProduct: {},
-      idProduct: null
+      idProduct: null,
     };
   },
   methods: {
     async fetchProduct() {
       const result = await Home.getProduct();
       console.log(result);
-      this.listProduct=result;
+      this.listProduct = result;
     },
-    turnOnEdit(){
-      this.isEDit = true
+    turnOnEdit() {
+      this.isEDit = true;
     },
-    turnOffEdit(){
-      this.isEDit = false
+    turnOffEdit() {
+      this.isEDit = false;
     },
-    getdata(product){
-      this.infoProduct = product
-      console.log(this.infoProduct)
+    getdata(product) {
+      this.infoProduct = product;
+      console.log(this.infoProduct);
     },
-    getId(product){
-      this.idProduct = product.id
-      console.log(this.idProduct)
+    getId(product) {
+      this.idProduct = product.id;
+      console.log(this.idProduct);
     },
-    acceptDelete(){
+    acceptDelete() {
       Product.deleteProduct(this.idProduct);
-      this.$bvModal.hide('delete');
-      let index = this.listProduct.findIndex(item => item.id === this.idProduct)
-      this.listProduct.splice(index, 1)
-    }
+      this.$bvModal.hide("delete");
+      let index = this.listProduct.findIndex(
+        (item) => item.id === this.idProduct
+      );
+      this.listProduct.splice(index, 1);
+    },
   },
   mounted() {
     this.fetchProduct();
