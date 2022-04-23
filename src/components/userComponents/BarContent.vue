@@ -3,8 +3,8 @@
     <div class="searchStyle">
       <div class="searchPosition">
         <div class="searchContainer">
-          <input placeholder="search" class="inputSearch" />
-          <span class="searchButton btn">
+          <input placeholder="search" class="inputSearch" v-model="searchInput" @keyup.enter="search"/>
+          <span class="searchButton btn" @click="search">
             <b-icon icon="search"></b-icon>
           </span>
         </div>
@@ -49,12 +49,18 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import searchInputAPI from '../../api/product.js';
 export default {
+  data(){
+    return {
+      searchInput: '',
+    }
+  },
   computed: {
-    ...mapGetters(["listProducts"]),
+    ...mapGetters(["listProducts"]), 
   },
   methods: {
-    ...mapActions(["addToCart", "isLogin"]),
+    ...mapActions(["addToCart", "isLogin", "saveProduct"]),
     addProductToCart(item) {
       if (!this.isLogin) {
         alert("You must login before");
@@ -66,6 +72,11 @@ export default {
       };
       this.addToCart(value);
     },
+    async search(){
+      const result = await searchInputAPI.searchInput(this.searchInput);
+      console.log(result);
+      this.saveProduct(result)
+    }
   },
 };
 </script>
