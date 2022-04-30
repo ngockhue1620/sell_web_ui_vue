@@ -20,7 +20,7 @@
                 </b-card-text>
 
                 <div>
-                  <router-link :to="`/product/${item.id}`"
+                  <router-link :to="`admin/product/${item.id}`"
                     >Chi Tiet</router-link
                   >
                   <b-button v-b-modal.edit @click="getdata(item)"

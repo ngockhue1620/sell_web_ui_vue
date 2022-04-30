@@ -1,5 +1,12 @@
 import Vue from 'vue'
 import handleErrors from '../utils/handleErrors'
+import baseApi from './base'
+const updateUser = (data) => baseApi.baseApi({
+  method: 'post',
+  url: `user/update_password/`,
+  data: data
+})
+
 export default {
   login: (value) =>
     Vue.axios
@@ -18,4 +25,6 @@ export default {
     }).catch((error) => {
       handleErrors.showError(error.response.data)
     }),
+
+  updateUser
 }

@@ -4,14 +4,14 @@
       <b-list-group-item>
         <h3><router-link to="/">Ngoc Khue Shop</router-link></h3>
       </b-list-group-item>
-      <b-list-group-item>
+      <b-list-group-item @click="showUserModal">
         <div>
           <b-avatar
             href="javascript:;"
             size="lg"
             :src="
               user.avatar
-                ? user.avatr
+                ? user.avatar
                 : 'https://demos.creative-tim.com/argon-dashboard-pro-bs4/assets/img/theme/team-4.jpg'
             "
           ></b-avatar>
@@ -91,13 +91,30 @@
         </b-form>
       </b-container>
     </div>
+    <b-modal
+      id="user"
+      size="xl"
+      v-if="isLogin"
+      title="Thông tin cá nhân"
+      @show="isShowModal"
+      @hide="isShowModal"
+      :hide-footer="true"
+    >
+      <b-container>
+        <User v-if="showUserModal" />
+      </b-container>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import UserApi from "../../api/userApi";
+import User from "../userComponents/user/User.vue";
 export default {
+  components: {
+    User,
+  },
   data() {
     return {
       form: {
@@ -106,6 +123,7 @@ export default {
         fullname: "",
       },
       isLoginForm: true,
+      showUserInfo: false,
     };
   },
   computed: {
@@ -121,6 +139,14 @@ export default {
     isFormSignUp() {
       this.isLoginForm = !this.isLoginForm;
       console.log(this.isLoginForm);
+    },
+
+    showUserModal() {
+      this.$bvModal.show("user");
+    },
+
+    isShowModal() {
+      this.showUserInfo = !this.showUserInfo;
     },
 
     async handleForm() {

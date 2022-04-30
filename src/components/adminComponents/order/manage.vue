@@ -37,7 +37,9 @@
               <img
                 :src="
                   detail.product.image
-                    ? detail.product.image
+                    ? detail.product.image.startsWith('http')
+                      ? detail.product.image
+                      : `http://127.0.0.1:8000${detail.product.image}`
                     : detail.product.image_url
                 "
                 class="cartImage"
@@ -109,6 +111,17 @@ export default {
     },
     clearOrderDetail() {
       this.order = false;
+    },
+  },
+  computed: {
+    handleImageUrl() {
+      let product_url = this.product.image
+        ? this.product.image
+        : this.product.image_url;
+      if (product_url && !product_url.startsWith("http")) {
+        product_url = "http://127.0.0.1:8000" + product_url;
+      }
+      return product_url;
     },
   },
   mounted() {

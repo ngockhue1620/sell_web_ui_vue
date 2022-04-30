@@ -1,7 +1,7 @@
 <template>
   <div class="barContent">
     <b-container class="productsList">
-      <b-form @submit="onclickSubmit">
+      <b-form @submit.prevent="onclickSubmit">
         <b-form-group id="input-group-0" label="Category:" label-for="input-0">
           <b-form-select
             v-model="infoProduct.category"
@@ -56,7 +56,7 @@
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
+        <b-button type="reset" variant="danger">Reset</b-button> 
       </b-form>
     </b-container>
   </div>
