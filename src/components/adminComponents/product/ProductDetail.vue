@@ -2,7 +2,10 @@
   <div class="barContent">
     <div class="d-flex">
       <b-card>
-        <img :src="handleImageUrl" style="max-width: 20rem" />
+        <img
+          :src="product.image ? product.image : product.image_url"
+          style="max-width: 20rem"
+        />
       </b-card>
       <div>
         <p><strong>Ten San Pham:</strong> {{ product.name }}</p>
@@ -36,7 +39,7 @@
 <script>
 import { mapActions } from "vuex";
 import productApi from "../../../api/product.js";
-import Comment from "./Commen.vue";
+import Comment from "../../userComponents/product/Commen.vue";
 import commentApi from "../../../api/comment.js";
 import { mapGetters } from "vuex";
 export default {
@@ -51,15 +54,6 @@ export default {
   },
   computed: {
     ...mapGetters(["user"]),
-    handleImageUrl() {
-      let product_url = this.product.image
-        ? this.product.image
-        : this.product.image_url;
-      if (product_url && !product_url.startsWith("http")) {
-        product_url = "http://127.0.0.1:8000" + product_url;
-      }
-      return product_url;
-    },
   },
   methods: {
     async getProductById() {
@@ -93,7 +87,6 @@ export default {
       this.comment = "";
     },
   },
-
   mounted() {
     this.getProductById();
   },

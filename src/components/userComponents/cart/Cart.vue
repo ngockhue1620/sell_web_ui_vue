@@ -24,8 +24,30 @@
             ><b-icon icon="trash"></b-icon></span
         ></b-col>
       </b-row>
-      <b-button variant="success" @click="pay">Thanh Toan</b-button>
+      <b-button variant="success" v-b-modal.order_info>Thanh Toan</b-button>
     </b-container>
+    <b-modal id="order_info" title="Thông tin đơn hàng" :hide-footer="true">
+      <b-form @submit.prevent="pay" v-if="productInCart.length > 0">
+        <b-form-group label="Ghi chú cho đơn hàng:">
+          <b-form-input placeholder="ghi chú" v-model="note"></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Địa chỉ nhận hàng:">
+          <b-form-input
+            placeholder="Địa chỉ"
+            required
+            v-model="address"
+          ></b-form-input>
+        </b-form-group>
+
+        <b-form-group label="Điện thoại người nhận:">
+          <b-form-input type="number" v-model="phone" required></b-form-input>
+        </b-form-group>
+
+        <b-button type="submit" variant="primary">Đặt hàng</b-button>
+      </b-form>
+      <p v-else>Bạn chưa chọn sản phẩm nào</p>
+    </b-modal>
   </div>
 </template>
 
@@ -40,13 +62,27 @@ export default {
   computed: {
     ...mapGetters(["productInCart", "totalMoney"]),
   },
+  data() {
+    return {
+      note: "",
+      address: "",
+      phone: "",
+    };
+  },
   methods: {
     ...mapActions(["remove"]),
     async pay() {
+      if (
+        (!parseInt(this.phone) && this.phone.length == 10) ||
+        this.phone.length == 11
+      ) {
+        alert("Điện thoại phải là chữ sô");
+        return;
+      }
       const value = {
-        note: "ok",
-        address: "ton duc thang",
-        phone: "23232323",
+        note: this.note,
+        address: this.address,
+        phone: this.phone,
         total: this.totalMoney,
         order_detail: this.productInCart,
       };
@@ -55,6 +91,7 @@ export default {
       if (result) {
         console.log(result);
         this.remove({ type: "all" });
+        this.$bvModal.hide("order_info");
       }
     },
   },

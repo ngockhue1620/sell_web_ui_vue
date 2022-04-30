@@ -1,7 +1,7 @@
 <template>
   <div class="barContent">
     <b-container class="productsList">
-      <b-form @submit="onclickSubmit">
+      <b-form @submit.prevent="onclickSubmit">
         <b-form-group id="input-group-0" label="Category:" label-for="input-0">
           <b-form-select
             v-model="infoProduct.category"

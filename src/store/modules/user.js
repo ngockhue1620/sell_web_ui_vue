@@ -21,11 +21,17 @@ export default {
         state.isLogin = false
         state.token = ""
       }
+    },
+    CHANGE_DATA_USER(state, data) {
+      state.user = data
     }
   },
   actions: {
     loginOrLogout({ commit }, data) {
       commit('LOGIN_LOGOUT', data)
+    },
+    changeDataUser({ commit }, data) {
+      commit('CHANGE_DATA_USER', data)
     }
   }
 }

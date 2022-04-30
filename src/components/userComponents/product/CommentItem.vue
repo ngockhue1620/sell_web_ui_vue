@@ -5,7 +5,7 @@
         size="2em"
         :src="
           comment.user.avatar
-            ? user.avatr
+            ? comment.user.avatar
             : 'https://demos.creative-tim.com/argon-dashboard-pro-bs4/assets/img/theme/team-4.jpg'
         "
       ></b-avatar>
