@@ -16,12 +16,12 @@ const baseApi = async (data) => {
 
   return Vue.axios(options)
     .then((response) => {
-      handleErrors.showError(response.data)
+      handleErrors.showError(response.data, true)
       console.log(response.data)
       return response.data
     }).catch((error) => {
       console.log(error)
-      handleErrors.showError(error.response.data)
+      handleErrors.showError(error.response.data, false)
     })
 }
 

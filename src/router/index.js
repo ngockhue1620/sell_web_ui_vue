@@ -15,7 +15,7 @@ import Login from '../components/adminComponents/Login.vue'
 import Admin from '../components/Admin.vue'
 import AMProduct from '../components/adminComponents/product/List.vue'
 import AMAddProduct from '../components/adminComponents/product/Add.vue'
-
+import AMProductDetail from '../components/adminComponents/product/ProductDetail.vue'
 import AMMOrder from '../components/adminComponents/order/manage.vue'
 
 Vue.use(VueRouter)
@@ -71,6 +71,11 @@ const routes = [
         path: 'manage-order',
         component: AMMOrder,
         meta: { requireAuth: true },
+      },
+      {
+        path: 'product/:id',
+        component: AMProductDetail,
+        meta: { requireAuth: false },
       }
     ],
     meta: { requireAuth: true },

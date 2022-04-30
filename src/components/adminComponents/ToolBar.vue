@@ -11,7 +11,7 @@
             size="lg"
             :src="
               user.avatar
-                ? user.avatr
+                ? user.avatar
                 : 'https://demos.creative-tim.com/argon-dashboard-pro-bs4/assets/img/theme/team-4.jpg'
             "
           ></b-avatar>
