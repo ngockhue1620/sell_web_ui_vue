@@ -5,6 +5,12 @@ const productDetail = (id) => baseApi.baseApi({
   url: `product/${id}`
 })
 
+const searchInput = (key) =>baseApi.baseApi({
+  method: 'get',
+  url: `product?keyword=${key}`
+})
+
 export default {
-  productDetail
+  productDetail,
+  searchInput
 }
