@@ -35,7 +35,7 @@
         </router-link>
       </b-list-group-item>
       <b-list-group-item>
-        <router-link to="/admin/add-category" class="nav-link">
+        <router-link to="/admin/category" class="nav-link">
           <span><b-icon icon="stopwatch"></b-icon></span>Them danh muc
         </router-link>
       </b-list-group-item>

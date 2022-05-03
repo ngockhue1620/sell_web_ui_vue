@@ -18,7 +18,7 @@ import AMAddProduct from '../components/adminComponents/product/Add.vue'
 import AMProductDetail from '../components/adminComponents/product/ProductDetail.vue'
 import AMMOrder from '../components/adminComponents/order/manage.vue'
 
-import AMAddCategory from '../components/adminComponents/category/AddCategory.vue'
+import AMCategory from '../components/adminComponents/category/List.vue'
 
 Vue.use(VueRouter)
 
@@ -80,8 +80,8 @@ const routes = [
         meta: { requireAuth: false },
       },
       {
-        path: 'add-category',
-        component: AMAddCategory,
+        path: 'category',
+        component: AMCategory,
         meta: { requireAuth: true },
       },
     ],
