@@ -1,5 +1,5 @@
 <template>
-  <div class="barContent">
+  <div class="barContent" :style="windowHeight">
     <div class="searchStyle">
       <div class="searchPosition">
         <div class="searchContainer">
@@ -12,7 +12,7 @@
     </div>
     <!-- <div class="underbackground"></div> -->
     <b-container class="productsList">
-      <b-row>
+      <b-row style="margin-top: 3px;">
         <b-col cols="4" v-for="item in listProducts" :key="item.id">
           <b-container>
             <b-row>
@@ -29,15 +29,28 @@
                 <b-card-text>
                   {{ item.description }}
                 </b-card-text>
-
-                <div>
-                  <b-button variant="primary" @click="addProductToCart(item)"
-                    >Them Vao Gio Hang</b-button
-                  >
-                </div>
-                <div>
-                  <router-link :to="`product/${item.id}`">Chi Tiet</router-link>
-                </div>
+                <!-- <div class="flex-container">
+                  <div class="button-hover">
+                    <b-button variant="primary" size="sm" @click="addProductToCart(item)"
+                      >Them Vao Gio Hang</b-button
+                    >
+                  </div>
+                  <div class="div-chi-tiet">
+                    <router-link class="btn btn-primary btn-sm" :to="`product/${item.id}`">Chi Tiet</router-link>
+                  </div>
+                </div> -->
+                <b-container>
+                  <b-row>
+                    <b-col cols="6">
+                      <b-button class="width-button" variant="primary"  @click="addProductToCart(item)"
+                      >Mua Hang</b-button
+                    >
+                    </b-col>
+                    <b-col cols="6">
+                      <router-link class="btn btn-primary width-button" :to="`product/${item.id}`">Chi Tiet</router-link>
+                    </b-col>
+                  </b-row>
+                </b-container>
               </b-card>
             </b-row>
           </b-container>
@@ -57,6 +70,11 @@ export default {
     }
   },
   computed: {
+    windowHeight() {
+      return {
+        height: `${window.innerHeight}px`,
+      };
+    },
     ...mapGetters(["listProducts"]), 
   },
   methods: {
@@ -141,4 +159,26 @@ export default {
   background: linear-gradient(87deg, #2dce89, #2dcecc) !important;
   height: 100px;
 }
+
+.flex-container {
+  display: flex;
+  /* background-color: DodgerBlue; */
+  
+}
+.div-chi-tiet {
+  margin-left: auto;
+}
+.card:hover {
+  box-shadow: 0 10px 10px 10px rgba(121, 117, 117, 0.2);
+}
+.button-hover:hover {
+  box-shadow: 4px 4px 4px 4px rgba(60, 122, 238, 0.2);
+}
+.width-button {
+  width: 100%;
+}
+.searchContainer:hover {
+  box-shadow: 4px 4px 4px 4px rgba(60, 122, 238, 0.2);
+}
+
 </style>

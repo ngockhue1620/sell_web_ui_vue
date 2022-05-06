@@ -26,7 +26,7 @@
                     >Edit</b-button
                   > -->
 
-                  <!-- <b-button v-b-modal.delete @click="getId(item)">xoa</b-button> -->
+                  <b-button v-b-modal.delete @click="getId(item)">xoa</b-button>
                 </div>
               </b-card>
             </b-row>
@@ -47,6 +47,12 @@
       >
       </add-category>
     </b-modal>
+    <b-modal id="delete" title="BootstrapVue" :hide-footer="true">
+      <p class="my-4">Bạn có chắc chắn xóa?</p>
+      <b-button class="mt-3" block @click="acceptDelete(idCategory)"
+        >Accept</b-button
+      >
+    </b-modal>
   </div>
 </template>
 
@@ -61,6 +67,7 @@ export default {
     return {
       show: false,
       categories: [],
+      idCategory: null,
     };
   },
   methods: {
@@ -74,6 +81,18 @@ export default {
     syncAfterCreateCategory(data) {
       this.categories.push(data);
       this.$bvModal.hide("add_cate");
+    },
+    getId(category) {
+      this.idCategory = category.id;
+      console.log(this.idCategory);
+    },
+    acceptDelete() {
+      Product.deleteCategory(this.idCategory);
+      this.$bvModal.hide("delete");
+      let index = this.categories.findIndex(
+        (item) => item.id === this.idCategory
+      );
+      this.categories.splice(index, 1);
     },
   },
   mounted() {

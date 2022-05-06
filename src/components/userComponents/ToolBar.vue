@@ -1,10 +1,10 @@
 <template>
-  <div class="card controlBar" :style="windowHeight">
+  <div class="controlBar background-gray" :style="windowHeight">
     <b-list-group v-if="isLogin">
-      <b-list-group-item>
-        <h3><router-link to="/">Ngoc Khue Shop</router-link></h3>
+      <b-list-group-item class="turnOff-border margin-2px background-gray">
+        <h3 style="text-align: center; font-size: 35px;"><router-link style="text-decoration: none;" to="/">Ngoc Khue Shop</router-link></h3>
       </b-list-group-item>
-      <b-list-group-item @click="showUserModal">
+      <b-list-group-item class="turnOff-border margin-2px background-gray" @click="showUserModal">
         <div>
           <b-avatar
             href="javascript:;"
@@ -18,7 +18,7 @@
           <b>{{ user.fullname }}</b>
         </div>
       </b-list-group-item>
-      <b-list-group-item>
+      <b-list-group-item class="margin-2px hover-list-group-item background-gray">
         <router-link to="/cart" class="nav-link"
           ><span>
             <b-icon icon="cart"></b-icon>
@@ -27,13 +27,13 @@
           {{ " " + totalProductInCart }}
         </router-link>
       </b-list-group-item>
-      <b-list-group-item>
+      <b-list-group-item class="margin-2px hover-list-group-item background-gray">
         <router-link to="/order-in-progress" class="nav-link">
           <span><b-icon icon="journals"></b-icon></span>
           Dang xu ly
         </router-link>
       </b-list-group-item>
-      <b-list-group-item>
+      <b-list-group-item class="margin-2px hover-list-group-item background-gray">
         <router-link to="/order-history" class="nav-link">
           <span><b-icon icon="stopwatch"></b-icon></span>Lich su mua hang
         </router-link>
@@ -189,5 +189,20 @@ li {
 }
 .bg-badge {
   background: "#0d6efd";
+}
+.margin-2px {
+  margin: 4px;
+}
+.turnOff-border {
+  border: 0px;
+}
+.hover-list-group-item:hover {
+  box-shadow: 0 2px 2px 2px rgba(121, 117, 117, 0.2);
+}
+/* .background-gray {
+  background: grey;
+} */
+.background-gray {
+    background: #e9ecef;
 }
 </style>

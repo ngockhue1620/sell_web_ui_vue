@@ -24,9 +24,15 @@ const deleteProduct = (id) => baseApi.baseApi({
   url: `product/${id}/`
 })
 
+const deleteCategory = (id) => baseApi.baseApi({
+  method: 'put',
+  url: `category/${id}/`
+})
+
 export default {
   listCategory,
   addProduct,
   editProduct,
-  deleteProduct
+  deleteProduct,
+  deleteCategory
 }
