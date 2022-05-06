@@ -56,7 +56,7 @@
         </b-form-group>
 
         <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button> 
+        <b-button type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-container>
   </div>
@@ -91,15 +91,28 @@ export default {
       console.log(getListCategory);
     },
     async onclickSubmit() {
+      let check = 0;
       const formData = new FormData();
       formData.append("category", this.infoProduct.category);
       formData.append("name", this.infoProduct.name);
       formData.append("description", this.infoProduct.description);
       formData.append("price", this.infoProduct.price);
       formData.append("quantity", this.infoProduct.quantity);
-      formData.append("image", this.infoProduct.image);
-      formData.append("image_url", this.infoProduct.image_url);
+      if (this.infoProduct.image) {
+        formData.append("image", this.infoProduct.image);
+        check += 1;
+      }
+      if (this.infoProduct.image_url) {
+        formData.append("image_url", this.infoProduct.image_url);
+        check += 1;
+      }
+      if (check == 0) {
+        alert("Bạn chưa truyền vào hình ảnh sản phẩm");
+        return;
+      }
+      console.log(formData);
       await Product.addProduct(formData);
+      this.$router.push("/admin");
     },
     handleUpload(event) {
       console.log(event);
