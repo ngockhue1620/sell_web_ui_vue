@@ -26,6 +26,7 @@
                     >Edit</b-button
                   > -->
 
+                  <b-button v-b-modal.edit @click="getdata(item)">Edit</b-button>
                   <b-button v-b-modal.delete @click="getId(item)">xoa</b-button>
                 </div>
               </b-card>
@@ -47,11 +48,14 @@
       >
       </add-category>
     </b-modal>
+
+    <b-modal id="edit" title="BootstrapVue" @show="turnOnEdit" @hide="turnOffEdit" :hide-footer="true" size="xl">
+      <Edit v-if="isEDit && infoCategory != {}" :category="infoCategory" />
+    </b-modal>
+
     <b-modal id="delete" title="BootstrapVue" :hide-footer="true">
       <p class="my-4">Bạn có chắc chắn xóa?</p>
-      <b-button class="mt-3" block @click="acceptDelete(idCategory)"
-        >Accept</b-button
-      >
+      <b-button class="mt-3" block @click="acceptDelete(idCategory)">Accept</b-button>
     </b-modal>
   </div>
 </template>
@@ -59,20 +63,34 @@
 <script>
 import AddCategory from "./AddCategory.vue";
 import Product from "../../../api/admin/product.js";
+import Category from "../../../api/admin/category";
+import Edit from "../../adminComponents/category/Edit.vue"
+import constance from '../../../constance/const'
 export default {
   components: {
     "add-category": AddCategory,
+    Edit
   },
   data() {
     return {
       show: false,
-      categories: [],
+      categories: [], // {} chu sao lai [], mãng sao . toi id duoc ok
       idCategory: null,
+      infoCategory: {},
+      isEDit: false,
     };
+    // roi bien categories no o mo ra ma prop qua ben kia cho hen nhan ?
+    //binding do
   },
   methods: {
     showModal() {
       this.show = !this.show;
+    },
+    turnOnEdit() {
+      this.isEDit = true;
+    },
+    turnOffEdit() {
+      this.isEDit = false;
     },
     async getListCategory() {
       const getListCategory = await Product.listCategory();
@@ -86,8 +104,14 @@ export default {
       this.idCategory = category.id;
       console.log(this.idCategory);
     },
-    acceptDelete() {
-      Product.deleteCategory(this.idCategory);
+    getdata(category) {
+      this.infoCategory = category;
+      console.log(this.infoCategory);
+    },
+    async acceptDelete() {
+      let formData = new FormData()
+      formData.append("is_activate",constance.CATEGORY_STATUS.CLOSE)
+      await Category.editCategory(formData, this.idCategory);
       this.$bvModal.hide("delete");
       let index = this.categories.findIndex(
         (item) => item.id === this.idCategory

@@ -23,9 +23,7 @@
                   <router-link :to="`admin/product/${item.id}`"
                     >Chi Tiet</router-link
                   >
-                  <b-button v-b-modal.edit @click="getdata(item)"
-                    >Edit</b-button
-                  >
+                  <b-button v-b-modal.edit @click="getdata(item)">Edit</b-button>
 
                   <b-button v-b-modal.delete @click="getId(item)">xoa</b-button>
                 </div>

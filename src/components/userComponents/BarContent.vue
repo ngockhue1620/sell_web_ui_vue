@@ -1,5 +1,5 @@
 <template>
-  <div class="barContent" :style="windowHeight">
+  <div class="barContent" >
     <div class="searchStyle">
       <div class="searchPosition">
         <div class="searchContainer">
