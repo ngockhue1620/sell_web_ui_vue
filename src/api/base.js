@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import handleErrors from '../utils/handleErrors'
 import store from '../store/index'
-const URL = 'http://127.0.0.1:8000/'
+import constance from '../constance/const'
+const URL = constance.URL
 
 const baseApi = async (data) => {
   const options = {
@@ -17,7 +18,7 @@ const baseApi = async (data) => {
   return Vue.axios(options)
     .then((response) => {
       handleErrors.showError(response.data, true)
-      console.log(response.data)
+      window.scrollTo(0, 0);
       return response.data
     }).catch((error) => {
       console.log(error)

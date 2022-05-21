@@ -17,6 +17,8 @@ import AMProduct from '../components/adminComponents/product/List.vue'
 import AMAddProduct from '../components/adminComponents/product/Add.vue'
 import AMProductDetail from '../components/adminComponents/product/ProductDetail.vue'
 import AMMOrder from '../components/adminComponents/order/manage.vue'
+import AMMSuccessOrder from '../components/adminComponents/order/SuccessOrder.vue'
+import AMMUser from '../components/adminComponents/user/Users.vue'
 
 import AMCategory from '../components/adminComponents/category/List.vue'
 
@@ -75,6 +77,15 @@ const routes = [
         meta: { requireAuth: true },
       },
       {
+        path: 'success-order',
+        component: AMMSuccessOrder,
+        meta: { requireAuth: true },
+      }, {
+        path: 'manage-order',
+        component: AMMOrder,
+        meta: { requireAuth: true },
+      },
+      {
         path: 'product/:id',
         component: AMProductDetail,
         meta: { requireAuth: false },
@@ -84,6 +95,11 @@ const routes = [
         component: AMCategory,
         meta: { requireAuth: true },
       },
+      {
+        path: 'users',
+        component: AMMUser,
+        meta: { requireAuth: true },
+      }
     ],
     meta: { requireAuth: true },
     name: "admin"

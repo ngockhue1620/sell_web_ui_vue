@@ -2,9 +2,16 @@
   <div class="controlBar background-gray" :style="windowHeight">
     <b-list-group v-if="isLogin">
       <b-list-group-item class="turnOff-border margin-2px background-gray">
-        <h3 style="text-align: center; font-size: 35px;"><router-link style="text-decoration: none;" to="/">Ngoc Khue Shop</router-link></h3>
+        <h3 style="text-align: center; font-size: 35px" @click="reload">
+          <router-link style="text-decoration: none" to="/"
+            >Tạp Hóa Online</router-link
+          >
+        </h3>
       </b-list-group-item>
-      <b-list-group-item class="turnOff-border margin-2px background-gray" @click="showUserModal">
+      <b-list-group-item
+        class="turnOff-border margin-2px background-gray"
+        @click="showUserModal"
+      >
         <div>
           <b-avatar
             href="javascript:;"
@@ -18,7 +25,9 @@
           <b>{{ user.fullname }}</b>
         </div>
       </b-list-group-item>
-      <b-list-group-item class="margin-2px hover-list-group-item background-gray">
+      <b-list-group-item
+        class="margin-2px hover-list-group-item background-gray"
+      >
         <router-link to="/cart" class="nav-link"
           ><span>
             <b-icon icon="cart"></b-icon>
@@ -27,13 +36,17 @@
           {{ " " + totalProductInCart }}
         </router-link>
       </b-list-group-item>
-      <b-list-group-item class="margin-2px hover-list-group-item background-gray">
+      <b-list-group-item
+        class="margin-2px hover-list-group-item background-gray"
+      >
         <router-link to="/order-in-progress" class="nav-link">
           <span><b-icon icon="journals"></b-icon></span>
           Dang xu ly
         </router-link>
       </b-list-group-item>
-      <b-list-group-item class="margin-2px hover-list-group-item background-gray">
+      <b-list-group-item
+        class="margin-2px hover-list-group-item background-gray"
+      >
         <router-link to="/order-history" class="nav-link">
           <span><b-icon icon="stopwatch"></b-icon></span>Lich su mua hang
         </router-link>
@@ -67,8 +80,9 @@
             ></b-form-input>
           </b-form-group>
           <b-form-group
+            v-if="!isLoginForm"
             id="input-group-2"
-            label="Ten Hien Thi"
+            label="Tên hiển thị"
             label-for="input-2"
           >
             <b-form-input
@@ -159,11 +173,17 @@ export default {
           token: result.token,
         });
       } else {
-        await UserApi.signUp(this.form);
+        const result = await UserApi.signUp(this.form);
+        if (result) {
+          window.location.reload();
+        }
       }
     },
     async signUp() {
       await UserApi.signUp(this.form);
+    },
+    reload() {
+      window.location.reload();
     },
   },
 };
@@ -203,6 +223,6 @@ li {
   background: grey;
 } */
 .background-gray {
-    background: #e9ecef;
+  background: #e9ecef;
 }
 </style>

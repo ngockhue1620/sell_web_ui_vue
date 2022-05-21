@@ -52,7 +52,7 @@
 
 <script>
 import OrderApi from "../../../api/orderApi";
-import InProgressItem from "./InProgressItem.vue";
+import InProgressItem from "../../userComponents/cart/InProgressItem.vue";
 import constance from "../../../constance/const.js";
 import constances from "../../../constance/const";
 

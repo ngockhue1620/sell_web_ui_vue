@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import handleErrors from '../utils/handleErrors'
 import baseApi from './base'
+import constance from '../constance/const'
+const URL = constance.URL
+
 const updateUser = (data) => baseApi.baseApi({
   method: 'post',
   url: `user/update_password/`,
@@ -10,7 +13,7 @@ const updateUser = (data) => baseApi.baseApi({
 export default {
   login: (value) =>
     Vue.axios
-      .post('http://127.0.0.1:8000/user/login/', value)
+      .post(`${URL}user/login/`, value)
       .then((response) => {
         handleErrors.showError(response.data)
         return response.data
@@ -18,7 +21,7 @@ export default {
         handleErrors.showError(error.response.data)
       }),
   signUp: (value) => Vue.axios
-    .post('http://127.0.0.1:8000/user/', value)
+    .post(`${URL}user/`, value)
     .then((response) => {
       handleErrors.showError(response.data)
       return response.data

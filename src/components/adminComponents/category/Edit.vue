@@ -5,27 +5,26 @@
         <b-container class="productsList">
           <b-form>
             <b-form-group label="Name:">
-        <b-form-input
-          placeholder="Enter category product"
-          required
-          v-model="infoCategory.name"
-        ></b-form-input>
-      </b-form-group>
+              <b-form-input
+                placeholder="Enter category product"
+                required
+                v-model="infoCategory.name"
+              ></b-form-input>
+            </b-form-group>
 
-      <b-form-group label="Image:" label-cols-sm="2">
-        <b-form-file
-          v-model="infoCategory.image"
-          @change="handleUpload($event)"
-        ></b-form-file>
-      </b-form-group>
+            <b-form-group label="Image:" label-cols-sm="2">
+              <b-form-file
+                v-model="infoCategory.image"
+                @change="handleUpload($event)"
+              ></b-form-file>
+            </b-form-group>
 
-      <b-form-group label="Image url:">
-        <b-form-textarea
-          placeholder="Link category image"
-          v-model="infoCategory.image_url"
-        ></b-form-textarea>
-      </b-form-group>
-      
+            <b-form-group label="Image url:">
+              <b-form-textarea
+                placeholder="Link category image"
+                v-model="infoCategory.image_url"
+              ></b-form-textarea>
+            </b-form-group>
 
             <b-button
               type="submit"
@@ -61,7 +60,7 @@
 <script>
 import Category from "../../../api/admin/category.js";
 export default {
-    props: {
+  props: {
     category: {
       type: [Object],
       default: () => {},
@@ -91,7 +90,7 @@ export default {
     },
   },
   methods: {
-    submitModal() {
+    async submitModal() {
       const formData = new FormData();
       formData.append("name", this.infoCategory.name);
       if (this.image) {
@@ -100,10 +99,11 @@ export default {
       if (this.image_url) {
         formData.append("image_url", this.image_url);
       }
-      
-      console.log(this.category.id)
-      Category.editCategory(formData, this.category.id);
+
+      console.log(this.category.id);
+      await Category.editCategory(formData, this.category.id);
       this.$bvModal.hide("edit");
+      window.location.reload();
     },
     handleUpload(event) {
       console.log(event);
@@ -114,9 +114,8 @@ export default {
   mounted() {
     this.infoCategory = this.category;
   },
-}
+};
 </script>
 
 <style>
-
 </style>

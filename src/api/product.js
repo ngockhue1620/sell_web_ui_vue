@@ -5,9 +5,9 @@ const productDetail = (id) => baseApi.baseApi({
   url: `product/${id}`
 })
 
-const searchInput = (key) =>baseApi.baseApi({
+const searchInput = (key, page) => baseApi.baseApi({
   method: 'get',
-  url: `product?keyword=${key}`
+  url: `product?keyword=${key}&?page${page}`
 })
 
 export default {

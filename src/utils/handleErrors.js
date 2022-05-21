@@ -3,9 +3,9 @@ function showError(data, isSuccess) {
     alert(data.message)
   } else if (data.detail) {
     alert(data.detail)
+  } else if (data.username) {
+    alert("Tên Đăng Nhập Bị Trùng")
   } else if (isSuccess) {
-    // alert("thành công")
-  } else {
     // alert("thất bại")
   }
 

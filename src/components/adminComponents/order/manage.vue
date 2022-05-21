@@ -20,12 +20,12 @@
       <div>
         <b-container v-if="order">
           <b-row class="productRow">
-            <b-col>Ma San Pham</b-col>
-            <b-col>Hinh Anh</b-col>
-            <b-col> Ten San Pham </b-col>
-            <b-col>Gia</b-col>
-            <b-col>So Luong mua</b-col>
-            <b-col>Thanh Tien</b-col>
+            <b-col>Mã sản phẩm</b-col>
+            <b-col>Hình ảnh</b-col>
+            <b-col>Tên sản phẩm </b-col>
+            <b-col>Giá</b-col>
+            <b-col>Số lượng mua</b-col>
+            <b-col>Thành tiền</b-col>
           </b-row>
           <b-row
             class="productRow"
@@ -39,7 +39,7 @@
                   detail.product.image
                     ? detail.product.image.startsWith('http')
                       ? detail.product.image
-                      : `http://127.0.0.1:8000${detail.product.image}`
+                      : `constances.URL${detail.product.image}`
                     : detail.product.image_url
                 "
                 class="cartImage"
@@ -54,9 +54,12 @@
           </b-row>
 
           <b-row v-if="order.invalid_order.status">
-            <b-alert show variant="warning">{{
-              order.invalid_order.status
-            }}</b-alert>
+            <b-alert show variant="warning"
+              >Mã sản phẩm:
+              <strong>{{ order.invalid_order.product.id }}</strong> với tên:
+              <strong>{{ order.invalid_order.product.name }}</strong> hiện
+              {{ order.invalid_order.status }}</b-alert
+            >
             <strong>
               Số lượng còn thực tế:
               {{ order.invalid_order.product.real_quantity }}
@@ -72,6 +75,7 @@
 import ShowOrder from "../order/ShowOrder.vue";
 import OrderApi from "../../../api/admin/order.js";
 import constance from "../../../constance/const.js";
+import constances from "../../../constance/const";
 export default {
   components: {
     ShowOrder,
@@ -105,9 +109,12 @@ export default {
     async approveOrder(data) {
       this.isSuccess = false;
       this.statusDetail = await OrderApi.approveOrder(data);
-      console.log(this.statusDetail);
-      let index = this.listOrder.findIndex((item) => item.id === this.orderId);
-      this.listOrder.splice(index, 1);
+      if (this.statusDetail) {
+        let index = this.listOrder.findIndex(
+          (item) => item.id === this.orderId
+        );
+        this.listOrder.splice(index, 1);
+      }
     },
     clearOrderDetail() {
       this.order = false;
@@ -119,7 +126,7 @@ export default {
         ? this.product.image
         : this.product.image_url;
       if (product_url && !product_url.startsWith("http")) {
-        product_url = "http://127.0.0.1:8000" + product_url;
+        product_url = constances.URL + product_url;
       }
       return product_url;
     },

@@ -2,12 +2,12 @@ import baseApi from '../base'
 
 const listCategory = () => baseApi.baseApi({
   method: 'get',
-  url: `category/`,
+  url: 'category/',
 })
 
 const addProduct = (data) => baseApi.baseApi({
   method: 'post',
-  url: `product/`,
+  url: 'product/',
   data: data,
   contentType: "multipart/form-data"
 })

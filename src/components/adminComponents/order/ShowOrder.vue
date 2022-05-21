@@ -2,28 +2,38 @@
   <b-card>
     <b-row>
       <b-col
+        v-if="order.invalid_order"
         cols="1"
         :class="order.invalid_order.status ? 'error_order' : 'ok_order'"
       ></b-col>
       <b-col>
         <b-row>
-          <b-col>Don {{ index + 1 }}</b-col>
-          <b-col>Trang Thai: {{ handleStatus }}</b-col>
+          <b-col>Đơn {{ index + 1 }}</b-col>
+          <b-col>Trạng thái: {{ handleStatus }}</b-col>
         </b-row>
         <b-row>
-          <b-col>Dai chi: {{ order.address }}</b-col>
+          <b-col>Địa chỉ: {{ order.address }}</b-col>
           <b-col>SDT: {{ order.phone }}</b-col>
         </b-row>
         <b-row>
-          <b-col>ghi chu: {{ order.note ? order.note : "Khong Co" }}</b-col>
-          <b-col>Tong Tine: {{ order.total }}</b-col>
+          <b-col>Ghi chú: {{ order.note ? order.note : "Khong Co" }}</b-col>
+          <b-col>Tổng tiền: {{ order.total }}</b-col>
         </b-row>
         <p>Ngay Tao: {{ handleTime }}</p>
         <div class="d-flex justify-content-end">
-          <b-button variant="primary" @click="showOrderDetail()"
-            >Chi tiet</b-button
+          <b-button
+            class="margin_item"
+            variant="info"
+            @click="showOrderDetail()"
+            >Chi tiết</b-button
           >
-          <b-button @click="approveOrder()"> Duyet </b-button>
+          <b-button
+            class="margin_item"
+            variant="primary"
+            @click="approveOrder()"
+          >
+            Duyet
+          </b-button>
         </div>
       </b-col>
     </b-row>
@@ -75,5 +85,8 @@ export default {
 .ok_order {
   max-width: 10px !important;
   background: green;
+}
+.margin_item {
+  margin: 5px;
 }
 </style>

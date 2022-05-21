@@ -1,9 +1,14 @@
 <template>
-  <div class="barContent" >
+  <div class="barContent">
     <div class="searchStyle">
       <div class="searchPosition">
         <div class="searchContainer">
-          <input placeholder="search" class="inputSearch" v-model="searchInput" @keyup.enter="search"/>
+          <input
+            placeholder="Tìm Kiếm"
+            class="inputSearch"
+            v-model="searchInput"
+            @keyup.enter="search"
+          />
           <span class="searchButton btn" @click="search">
             <b-icon icon="search"></b-icon>
           </span>
@@ -12,13 +17,13 @@
     </div>
     <!-- <div class="underbackground"></div> -->
     <b-container class="productsList">
-      <b-row style="margin-top: 3px;">
+      <b-row style="margin-top: 3px">
         <b-col cols="4" v-for="item in listProducts" :key="item.id">
           <b-container>
             <b-row>
               <b-card
                 :title="item.name"
-                :img-src="item.image ? item.image : item.image_url"
+                :img-src="item | handleImageUrl"
                 img-alt="Image"
                 img-top
                 tag="article"
@@ -39,35 +44,48 @@
                     <router-link class="btn btn-primary btn-sm" :to="`product/${item.id}`">Chi Tiet</router-link>
                   </div>
                 </div> -->
-                <b-container>
-                  <b-row>
-                    <b-col cols="6">
-                      <b-button class="width-button" variant="primary"  @click="addProductToCart(item)"
-                      >Mua Hang</b-button
-                    >
-                    </b-col>
-                    <b-col cols="6">
-                      <router-link class="btn btn-primary width-button" :to="`product/${item.id}`">Chi Tiet</router-link>
-                    </b-col>
-                  </b-row>
-                </b-container>
+                <div class="d-flex justify-content-between">
+                  <b-button
+                    class="width-button"
+                    variant="primary"
+                    @click="addProductToCart(item)"
+                    >Mua Hang</b-button
+                  >
+                  <router-link
+                    class="btn btn-primary width-button"
+                    :to="`product/${item.id}`"
+                    >Chi Tiet</router-link
+                  >
+                </div>
               </b-card>
             </b-row>
           </b-container>
         </b-col>
       </b-row>
     </b-container>
+    <div class="d-flex justify-content-center" v-if="listProducts.length > 0">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+      ></b-pagination>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import searchInputAPI from '../../api/product.js';
+import searchInputAPI from "../../api/product.js";
+import constances from "../../constance/const";
+import Home from "../../api/home";
 export default {
-  data(){
+  data() {
     return {
-      searchInput: '',
-    }
+      searchInput: "",
+      currentPage: 1,
+      rows: 1,
+      perPage: 9,
+    };
   },
   computed: {
     windowHeight() {
@@ -75,26 +93,56 @@ export default {
         height: `${window.innerHeight}px`,
       };
     },
-    ...mapGetters(["listProducts"]), 
+    ...mapGetters(["listProducts", "isLogin"]),
+  },
+  watch: {
+    currentPage() {
+      this.fetchProduct();
+    },
   },
   methods: {
-    ...mapActions(["addToCart", "isLogin", "saveProduct"]),
+    ...mapActions(["addToCart", "saveProduct"]),
+    async fetchProduct() {
+      const data = await Home.getProduct(this.currentPage);
+      this.rows = data.count;
+      this.saveProduct(data.results);
+    },
     addProductToCart(item) {
-      if (!this.isLogin) {
-        alert("You must login before");
+      if (!this.isLogin || this.isLogin == null) {
+        alert("Bạn phải đăng nhập trước khi mua hàng");
         return;
       }
+
       const value = {
         product: item,
         quantity: 1,
       };
       this.addToCart(value);
     },
-    async search(){
-      const result = await searchInputAPI.searchInput(this.searchInput);
-      console.log(result);
-      this.saveProduct(result)
-    }
+    async search() {
+      const data = await searchInputAPI.searchInput(
+        this.searchInput,
+        this.currentPage
+      );
+      this.saveProduct(data.results);
+      this.rows = data.count;
+    },
+  },
+  filters: {
+    handleImageUrl(product) {
+      let product_url = product.image ? product.image : product.image_url;
+      if (
+        product_url &&
+        !product_url.startsWith("http") &&
+        product_url.startsWith("/images")
+      ) {
+        product_url = constances.URL + product_url;
+      }
+      return product_url;
+    },
+  },
+  mounted() {
+    this.fetchProduct();
   },
 };
 </script>
@@ -163,7 +211,6 @@ export default {
 .flex-container {
   display: flex;
   /* background-color: DodgerBlue; */
-  
 }
 .div-chi-tiet {
   margin-left: auto;
@@ -176,9 +223,9 @@ export default {
 }
 .width-button {
   width: 100%;
+  margin: 5px;
 }
 .searchContainer:hover {
   box-shadow: 4px 4px 4px 4px rgba(60, 122, 238, 0.2);
 }
-
 </style>

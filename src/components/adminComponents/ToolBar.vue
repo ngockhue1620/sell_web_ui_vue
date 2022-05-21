@@ -2,7 +2,7 @@
   <div class="card controlBar" :style="windowHeight">
     <b-list-group>
       <b-list-group-item>
-        <h3><router-link to="/">Ngoc Khue Shop</router-link></h3>
+        <h3><router-link to="/">Tạp Hóa Online</router-link></h3>
       </b-list-group-item>
       <b-list-group-item>
         <div>
@@ -21,30 +21,38 @@
 
       <b-list-group-item>
         <router-link to="/admin" class="nav-link">
-          <span><b-icon icon="stopwatch"></b-icon></span>Danh sach san pham
+          Danh sach san pham
         </router-link>
       </b-list-group-item>
       <b-list-group-item>
         <router-link to="/admin/add-product" class="nav-link">
-          <span><b-icon icon="stopwatch"></b-icon></span>Them san pham
+          Them san pham
         </router-link>
       </b-list-group-item>
       <b-list-group-item>
         <router-link to="/admin/manage-order" class="nav-link">
-          <span><b-icon icon="stopwatch"></b-icon></span>Quan li don hang
+          Quan li don hang
+        </router-link>
+      </b-list-group-item>
+      <b-list-group-item>
+        <router-link to="/admin/success-order" class="nav-link">
+          Đơn Hàng Đã Duyệt
         </router-link>
       </b-list-group-item>
       <b-list-group-item>
         <router-link to="/admin/category" class="nav-link">
-          <span><b-icon icon="stopwatch"></b-icon></span>Them danh muc
+          Them danh muc
         </router-link>
       </b-list-group-item>
+      <b-list-group-item @click="logout">
+        <p class="nav-link">Đăng Xuất</p></b-list-group-item
+      >
     </b-list-group>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   computed: {
     ...mapGetters(["user"]),
@@ -54,7 +62,15 @@ export default {
       };
     },
   },
-  methods: {},
+  methods: {
+    ...mapActions(["loginOrLogout"]),
+    logout() {
+      this.loginOrLogout({
+        type: "logout",
+      });
+      window.location.reload();
+    },
+  },
 };
 </script>
 

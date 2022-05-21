@@ -34,14 +34,7 @@
               :key="detail.id"
             >
               <b-col>
-                <img
-                  :src="
-                    detail.product.image
-                      ? detail.product.image
-                      : detail.product.image_url
-                  "
-                  class="cartImage"
-                />
+                <img :src="detail.product | handleImageUrl" class="cartImage" />
               </b-col>
               <b-col>
                 {{ detail.product.name }}
@@ -61,7 +54,7 @@
 import OrderApi from "../../../api/orderApi";
 import InProgressItem from "./InProgressItem.vue";
 import constance from "../../../constance/const.js";
-
+import constances from "../../../constance/const";
 export default {
   components: {
     InProgressItem,
@@ -95,6 +88,19 @@ export default {
   mounted() {
     console.log("cons", constance.STATUS);
     this.getOrderInProgress();
+  },
+  filters: {
+    handleImageUrl(product) {
+      let product_url = product.image ? product.image : product.image_url;
+      if (
+        product_url &&
+        !product_url.startsWith("http") &&
+        product_url.startsWith("/images")
+      ) {
+        product_url = constances.URL + product_url;
+      }
+      return product_url;
+    },
   },
 };
 </script>

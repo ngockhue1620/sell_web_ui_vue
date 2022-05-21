@@ -18,7 +18,7 @@ export default {
       }
       if (data.type === "logout") {
         state.user = {}
-        state.isLogin = false
+        state.isLogin = null
         state.token = ""
       }
     },

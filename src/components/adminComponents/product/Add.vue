@@ -2,7 +2,11 @@
   <div class="barContent">
     <b-container class="productsList">
       <b-form @submit.prevent="onclickSubmit">
-        <b-form-group id="input-group-0" label="Category:" label-for="input-0">
+        <b-form-group
+          id="input-group-0"
+          label="Danh Mục Sản Phẩm:"
+          label-for="input-0"
+        >
           <b-form-select
             v-model="infoProduct.category"
             :options="options"
@@ -11,52 +15,51 @@
           ></b-form-select>
         </b-form-group>
 
-        <b-form-group label="Name:">
+        <b-form-group label="Tên sản phẩm:">
           <b-form-input
-            placeholder="Enter name product"
+            placeholder="Tên sản phẩm"
             required
             v-model="infoProduct.name"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Description:">
+        <b-form-group label="Mô tả:">
           <b-form-input
-            placeholder="Enter description"
+            placeholder="Mô tả"
             required
             v-model="infoProduct.description"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Price:">
+        <b-form-group label="Giá sản phẩm:">
           <b-form-input
             type="number"
             v-model="infoProduct.price"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Quantity:">
+        <b-form-group label="Số lượng thêm:">
           <b-form-input
             type="number"
             v-model="infoProduct.quantity"
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group label="Image:" label-cols-sm="2">
+        <b-form-group label="Hình ảnh:" label-cols-sm="2">
           <b-form-file
             v-model="infoProduct.image"
             @change="handleUpload($event)"
           ></b-form-file>
         </b-form-group>
 
-        <b-form-group label="Image url:">
+        <b-form-group label="URL của anh:">
           <b-form-textarea
-            placeholder="Link product image"
+            placeholder="URL hình ảnh"
             v-model="infoProduct.image_url"
           ></b-form-textarea>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
+        <b-button type="submit" variant="primary">Thêm Sản Phẩm</b-button>
       </b-form>
     </b-container>
   </div>
@@ -88,7 +91,6 @@ export default {
         id: 0,
         name: "Danh Muc San Pham",
       });
-      console.log(getListCategory);
     },
     async onclickSubmit() {
       let check = 0;
@@ -112,7 +114,7 @@ export default {
       }
       console.log(formData);
       await Product.addProduct(formData);
-      this.$router.push("/admin");
+      // this.$router.push("/admin");
     },
     handleUpload(event) {
       console.log(event);

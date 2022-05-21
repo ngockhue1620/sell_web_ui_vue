@@ -7,7 +7,7 @@
             <b-row>
               <b-card
                 :title="item.name"
-                :img-src="item.image ? item.image : item.image_url"
+                :img-src="item | handleImageUrl"
                 img-alt="Image"
                 img-top
                 tag="article"
@@ -19,13 +19,25 @@
                   {{ item.description }}
                 </b-card-text>
 
-                <div>
-                  <router-link :to="`admin/product/${item.id}`"
+                <div class="d-flex justify-content-between">
+                  <router-link
+                    class="btn btn-primary"
+                    :to="`admin/product/${item.id}`"
                     >Chi Tiet</router-link
                   >
-                  <b-button v-b-modal.edit @click="getdata(item)">Edit</b-button>
+                  <b-button
+                    v-b-modal.edit
+                    @click="getdata(item)"
+                    variant="primary"
+                    >Sửa</b-button
+                  >
 
-                  <b-button v-b-modal.delete @click="getId(item)">xoa</b-button>
+                  <b-button
+                    v-b-modal.delete
+                    @click="getId(item)"
+                    variant="primary"
+                    >Xóa</b-button
+                  >
                 </div>
               </b-card>
             </b-row>
@@ -33,6 +45,14 @@
         </b-col>
       </b-row>
     </b-container>
+    <div class="d-flex justify-content-end">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="9"
+        aria-controls="my-table"
+      ></b-pagination>
+    </div>
     <b-modal
       id="edit"
       title="BootstrapVue"
@@ -46,7 +66,7 @@
     <b-modal id="delete" title="BootstrapVue" :hide-footer="true">
       <p class="my-4">Bạn có chắc chắn xóa?</p>
       <b-button class="mt-3" block @click="acceptDelete(idProduct)"
-        >Accept</b-button
+        >Chấp Nhận</b-button
       >
     </b-modal>
   </div>
@@ -56,6 +76,7 @@
 import Home from "../../../api/home.js";
 import Product from "../../../api/admin/product.js";
 import Edit from "../../../components/adminComponents/product/Edit.vue";
+import constances from "../../../constance/const";
 export default {
   components: {
     Edit,
@@ -66,13 +87,33 @@ export default {
       isEDit: false,
       infoProduct: {},
       idProduct: null,
+      currentPage: 1,
+      rows: 1,
     };
+  },
+  filters: {
+    handleImageUrl(product) {
+      let product_url = product.image ? product.image : product.image_url;
+      if (
+        product_url &&
+        !product_url.startsWith("http") &&
+        product_url.startsWith("/images")
+      ) {
+        product_url = constances.URL + product_url;
+      }
+      return product_url;
+    },
+  },
+  watch: {
+    currentPage() {
+      this.fetchProduct();
+    },
   },
   methods: {
     async fetchProduct() {
-      const result = await Home.getProduct();
-      console.log(result);
-      this.listProduct = result;
+      const data = await Home.getProduct(this.currentPage);
+      this.listProduct = data.results;
+      this.rows = data.count;
     },
     turnOnEdit() {
       this.isEDit = true;

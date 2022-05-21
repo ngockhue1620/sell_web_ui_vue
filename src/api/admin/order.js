@@ -17,12 +17,12 @@ export default {
   }),
 
   approveOrder: (id) => baseApi.baseApi({
-      method: 'put',
-      url: `order/${id}/`,
+    method: 'put',
+    url: `order/${id}/`,
   }),
 
   statusDetail: (id) => baseApi.baseApi({
     method: 'get',
     url: `order/${id}/`
-}),
+  }),
 }

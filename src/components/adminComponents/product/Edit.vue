@@ -97,6 +97,7 @@
 
 <script>
 import Product from "../../../api/admin/product.js";
+import constances from "../../../constance/const";
 export default {
   props: {
     product: {
@@ -124,9 +125,20 @@ export default {
   computed: {
     handleImageUrl() {
       if (this.image === null && this.image_url === null) {
-        return this.infoProduct.image
+        // return this.infoProduct.image
+        //   ? this.infoProduct.image
+        //   : this.infoProduct.image_url;
+        let product_url = this.infoProduct.image
           ? this.infoProduct.image
           : this.infoProduct.image_url;
+        if (
+          product_url &&
+          !product_url.startsWith("http") &&
+          product_url.startsWith("/images")
+        ) {
+          product_url = constances.URL + product_url;
+        }
+        return product_url;
       }
       return this.image ? this.image : this.image_url;
     },

@@ -18,7 +18,7 @@
                 img-width="280"
                 img-height="280"
               >
-                <div>
+                <div class="d-flex justify-content-between">
                   <!-- <router-link :to="`admin/product/${item.id}`"
                     >Chi Tiet</router-link
                   >
@@ -26,8 +26,18 @@
                     >Edit</b-button
                   > -->
 
-                  <b-button v-b-modal.edit @click="getdata(item)">Edit</b-button>
-                  <b-button v-b-modal.delete @click="getId(item)">xoa</b-button>
+                  <b-button
+                    v-b-modal.edit
+                    @click="getdata(item)"
+                    variant="primary"
+                    >Sửa</b-button
+                  >
+                  <b-button
+                    v-b-modal.delete
+                    @click="getId(item)"
+                    variant="primary"
+                    >xoa</b-button
+                  >
                 </div>
               </b-card>
             </b-row>
@@ -49,13 +59,22 @@
       </add-category>
     </b-modal>
 
-    <b-modal id="edit" title="BootstrapVue" @show="turnOnEdit" @hide="turnOffEdit" :hide-footer="true" size="xl">
+    <b-modal
+      id="edit"
+      title="BootstrapVue"
+      @show="turnOnEdit"
+      @hide="turnOffEdit"
+      :hide-footer="true"
+      size="xl"
+    >
       <Edit v-if="isEDit && infoCategory != {}" :category="infoCategory" />
     </b-modal>
 
     <b-modal id="delete" title="BootstrapVue" :hide-footer="true">
       <p class="my-4">Bạn có chắc chắn xóa?</p>
-      <b-button class="mt-3" block @click="acceptDelete(idCategory)">Accept</b-button>
+      <b-button class="mt-3" block @click="acceptDelete(idCategory)"
+        >Chập nhận</b-button
+      >
     </b-modal>
   </div>
 </template>
@@ -64,12 +83,12 @@
 import AddCategory from "./AddCategory.vue";
 import Product from "../../../api/admin/product.js";
 import Category from "../../../api/admin/category";
-import Edit from "../../adminComponents/category/Edit.vue"
-import constance from '../../../constance/const'
+import Edit from "../../adminComponents/category/Edit.vue";
+import constance from "../../../constance/const";
 export default {
   components: {
     "add-category": AddCategory,
-    Edit
+    Edit,
   },
   data() {
     return {
@@ -109,8 +128,8 @@ export default {
       console.log(this.infoCategory);
     },
     async acceptDelete() {
-      let formData = new FormData()
-      formData.append("is_activate",constance.CATEGORY_STATUS.CLOSE)
+      let formData = new FormData();
+      formData.append("is_activate", constance.CATEGORY_STATUS.CLOSE);
       await Category.editCategory(formData, this.idCategory);
       this.$bvModal.hide("delete");
       let index = this.categories.findIndex(

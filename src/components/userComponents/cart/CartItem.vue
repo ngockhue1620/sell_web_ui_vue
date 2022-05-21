@@ -1,10 +1,7 @@
 <template>
   <b-row class="productRow">
     <b-col>
-      <img
-        :src="product.image ? product.image : product.image_url"
-        class="cartImage"
-      />
+      <img :src="product | handleImageUrl" class="cartImage" />
     </b-col>
     <b-col>
       {{ product.name }}
@@ -20,6 +17,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import constances from "../../../constance/const";
 export default {
   props: {
     product: {
@@ -57,6 +55,19 @@ export default {
   },
   mounted() {
     // this.quantity = this.product.quantity;
+  },
+  filters: {
+    handleImageUrl(product) {
+      let product_url = product.image ? product.image : product.image_url;
+      if (
+        product_url &&
+        !product_url.startsWith("http") &&
+        product_url.startsWith("/images")
+      ) {
+        product_url = constances.URL + product_url;
+      }
+      return product_url;
+    },
   },
 };
 </script>

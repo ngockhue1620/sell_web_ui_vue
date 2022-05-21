@@ -23,14 +23,6 @@
         ></b-form-textarea>
       </b-form-group>
 
-      <b-form-group label="IsActive:">
-        <b-form-input
-          placeholder="Enter isactive category"
-          required
-          v-model="infoCategory.isactive"
-        ></b-form-input>
-      </b-form-group>
-
       <b-button type="submit" variant="primary">Submit</b-button>
     </b-form>
   </b-container>
@@ -51,7 +43,6 @@ export default {
         name: "",
         image: null,
         image_url: null,
-        isactive: null
       },
     };
   },

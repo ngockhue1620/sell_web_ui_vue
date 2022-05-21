@@ -8,7 +8,7 @@
         <p><strong>Ten San Pham:</strong> {{ product.name }}</p>
         <p><strong>Mo ta:</strong>{{ product.description }}</p>
         <p><strong>Gia:</strong>{{ product.price }}</p>
-        <p><strong>So luong con:</strong>{{ product.quantity }}</p>
+        <!-- <p><strong>So luong con:</strong>{{ product.quantity }}</p> -->
       </div>
     </div>
     <div>
@@ -39,6 +39,7 @@ import productApi from "../../../api/product.js";
 import Comment from "./Commen.vue";
 import commentApi from "../../../api/comment.js";
 import { mapGetters } from "vuex";
+import constances from "../../../constance/const";
 export default {
   components: {
     Comment,
@@ -55,8 +56,12 @@ export default {
       let product_url = this.product.image
         ? this.product.image
         : this.product.image_url;
-      if (product_url && !product_url.startsWith("http")) {
-        product_url = "http://127.0.0.1:8000" + product_url;
+      if (
+        product_url &&
+        !product_url.startsWith("http") &&
+        product_url.startsWith("/images")
+      ) {
+        product_url = constances.URL + product_url;
       }
       return product_url;
     },

@@ -64,7 +64,10 @@
           v-model="userInfo.re_check_new_password"
         ></b-form-input>
       </b-form-group>
-      <b-button type="submit">Cập nhập</b-button>
+      <div class="d-flex justify-content-between" style="margin: 1rem">
+        <b-button variant="success" type="submit">Cập nhập</b-button>
+        <b-button @click="logout" variant="danger">Đăng xuất</b-button>
+      </div>
     </form>
   </b-container>
 </template>
@@ -91,11 +94,12 @@ export default {
     ...mapGetters(["user"]),
   },
   methods: {
-    ...mapActions(["changeDataUser"]),
+    ...mapActions(["changeDataUser", "loginOrLogout"]),
     async updateInfo() {
       const result = await UserApi.updateUser(this.userInfo);
       if (result) {
         this.changeDataUser(result.user);
+        window.location.reload();
       }
     },
     editPassword() {
@@ -109,11 +113,17 @@ export default {
         this.newAvatar = "";
       }
     },
+    logout() {
+      this.loginOrLogout({
+        type: "logout",
+      });
+      window.location.reload();
+    },
   },
   mounted() {
-    this.userInfo.avatar = this.user.avatar;
-    this.userInfo.fullname = this.user.fullname;
-    this.userInfo.username = this.user.username;
+    this.userInfo.avatar = String(this.user.avatar);
+    this.userInfo.fullname = String(this.user.fullname);
+    this.userInfo.username = String(this.user.username);
   },
 };
 </script>
